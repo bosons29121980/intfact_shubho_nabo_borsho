@@ -1,39 +1,35 @@
 #!/usr/local/bin/python3
 import sys
 import math
-num = str(sys.argv[1])
-l = len(num)
-nzeros = len(str(l)) + 2
-mult = math.pow(10, nzeros)
+
+def compose(n):
+   l = len(n)
+   s = ""
+   for x in range(0, 5):
+      s = s + n[x % l]
+   return s
+
 f=open("./pi.dat","r")
-g=open(str(num)[:10] + "_pi.dat","w")
+g=open("./e.dat","r")
 f.read(2)
+g.read(2)
+n=str(sys.argv[1])
+w=open(compose(n) + "_out.dat", "w")
+l=len(n)
+mult=len(str(l)) + 1
+nzeros = math.pow(10, mult)
 ctr = 0
 ptr = 0
 while True:
     c = str(f.read(1))
-    n = num[ctr % l]
-    if c == n:
-       g.write(c)
-       ptr = ptr + 1
-       if ptr == mult:
+    d = str(g.read(1))
+    if c in ['7',  '8'] and d in ['7', '8']:
+        w.write(n[ctr % l])
+        ptr = ptr + 1
+        if ptr == nzeros:
            break
     ctr = ctr + 1
-g.close()
 f.close()
-f=open("./e.dat","r")
-g=open(str(num)[:10] + "_e.dat","w")
-f.read(2)
-ctr = 0
-ptr = 0
-while True:
-    c = str(f.read(1))
-    n = num[ctr % l]
-    if c == n:
-       g.write(c)
-       ptr = ptr + 1
-       if ptr == mult:
-           break
-    ctr = ctr + 1
 g.close()
-f.close()
+w.close()
+             
